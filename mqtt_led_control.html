@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32 LED Control</title>
+</head>
+<body>
+    <h1>ESP32 LED Control via MQTT</h1>
+    <button onclick="publishMessage('ON')">Turn ON</button>
+    <button onclick="publishMessage('OFF')">Turn OFF</button>
+
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script>
+        // Connect to HiveMQ public broker over WebSocket
+        const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
+
+        client.on("connect", function () {
+            console.log("Connected to HiveMQ broker over WebSocket");
+        });
+
+        function publishMessage(msg) {
+            client.publish("ESP32/LED", msg);
+            console.log("Published:", msg);
+        }
+    </script>
+</body>
+</html>
